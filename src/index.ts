@@ -47,6 +47,7 @@ export function fetch(reference: string, property?: any) {
     return objectPath.withInheritedProps.get(obj, property)
 }
 
-push(["vart", "a.b"], 69)
+push(["Application", "a.b"], 69)
+push(["Application", "a.c"], 69)
 
-console.log(fetch("vart", "a.b"))
+console.log(fetch("Application"))
