@@ -21,6 +21,6 @@
     "@types/object-path": "^0.11.0",
     "dset": "^2.0.1",
     "node-localstorage": "^2.1.5",
-    "object-path": "^0.11.4"
+    "object-path": "^0.11.5"
   }
 }
