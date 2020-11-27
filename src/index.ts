@@ -59,7 +59,7 @@ class Model {
         }
 
         this._struct.forEach((item: string) => {
-            Object.defineProperty(this, item, { get: () => cleanInputData[item], set: (x) => x  })
+            Object.defineProperty(this, item, { get: () => cleanInputData[item], configurable: true })
         }, this)
 
     }
