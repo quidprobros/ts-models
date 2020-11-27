@@ -1,53 +1,119 @@
-import objectPath from "object-path"
-// @ts-ignore
-import dset from "dset"
+// could use store.transact to enforce types?
 
-import { LocalStorage } from "node-localstorage";
-const localStorage = new LocalStorage('./scratch')
-// storage
-// model
+import $ from "jquery"
 
-// here's where i set different storage media
+import dlv from "@paxperscientiam/dlv.ts"
 
-export function push(referencePropComplex: string[], value: any) {
-    const reference = referencePropComplex[0]
-    const property = referencePropComplex[1]
+import store, { set } from "store2"
 
-    // @ts-ignore Localstorage node
-    let obj = JSON.parse(localStorage.getItem(reference))
-    // google
-    //   let obj = JSON.parse(Application.userProperties.getProperty(reference))
-    if (obj == null) {
-        obj = {}
-    }
-    if (!!property) {
-        dset(obj, property, value)
-    } else {
-        obj = value
-    }
-    // @ts-ignore
-    localStorage.setItem(reference, JSON.stringify(obj))
-    // google
-    // Application.userProperties.setProperty(reference, JSON.stringify(obj))
+import {objFilter} from "./util"
+
+const x = document.getElementById("body");
+
+x!.style.backgroundColor = "yellow"
+
+//store.clearAll()
+
+interface IStruct {
+    [prop:string]: string
 }
 
-export function fetch(reference: string, property?: any) {
-    // @ts-ignore
-    // let obj = JSON.parse(Application.userProperties.getProperty(reference))
-    let obj = JSON.parse(localStorage.getItem(reference))
-    if (obj == null) {
-        obj = {}
-        localStorage.setItem(reference, "{}")
-        //  Application.userProperties.setProperty(reference, "{}")
-        return null
+class Model {
+    protected _id!: number
+    private _modelStore: store.StoreAPI = store
+    private _struct!: string[]
+    private _namespace!: string
+
+    constructor(namespace: string, struct: string[]) {
+        this._namespace = namespace
+        this._struct = struct
     }
-    if (property == null) {
-        return obj
+
+    save(data: IStruct, overwrite: boolean = false) {
+        const cleanInputData = objFilter(this._struct, data)
+        let currentData
+        let saveData
+        if ("" !== this._namespace) {
+            currentData = this._modelStore.namespace(this._namespace).get(this._id)
+            if (overwrite) {
+                saveData = {
+                    ...currentData,
+                    ...cleanInputData,
+                }
+            } else {
+                saveData = cleanInputData
+            }
+            this._modelStore.namespace(this._namespace).set(this._id, saveData)
+        } else {
+            currentData = this._modelStore.get(this._id)
+            if (overwrite) {
+                saveData = {
+                    ...currentData,
+                    ...cleanInputData,
+                }
+            } else {
+                saveData = cleanInputData
+            }
+            this._modelStore.set(this._id, saveData)
+        }
+
+        this._struct.forEach((item: string) => {
+            Object.defineProperty(this, item, { get: () => cleanInputData[item] })
+        }, this)
+
     }
-    return objectPath.withInheritedProps.get(obj, property)
+
+    getItem(key:string) {
+        return dlv(this._modelStore.namespace(this._namespace).get(this._id), key)
+    }
+
+    get id() {
+        return this._id
+    }
+
+    erase() {
+        this._modelStore.namespace(this._namespace).clearAll()
+    }
+
+    dump() {
+        return this._modelStore.namespace(this._namespace).get(this._id)
+    }
 }
 
-push(["Application", "a.b"], 69)
-push(["Application", "a.c"], 69)
 
-console.log(fetch("Application"))
+class User extends Model {
+//    private userStore!: store.StoreAPI
+    private originalData!: {}
+
+    constructor(id?: number) {
+        super(
+            "User",
+            [
+                "name",
+                "username",
+                "age",
+            ]
+        )
+
+        if (null == id) {
+            throw 'id required!';
+        } else {
+            this._id = id
+        }
+    }
+}
+
+// class User_collection extends Collection {
+//     constructor() {
+//         super()
+//     }
+
+// }
+
+
+
+globalThis.Model = Model
+globalThis.store = store
+
+
+globalThis.User = User
