@@ -35,7 +35,7 @@ class Model {
         let saveData
         if ("" !== this._namespace) {
             currentData = this._modelStore.namespace(this._namespace).get(this._id)
-            if (overwrite) {
+            if (true != overwrite) {
                 saveData = {
                     ...currentData,
                     ...cleanInputData,
@@ -43,6 +43,7 @@ class Model {
             } else {
                 saveData = cleanInputData
             }
+            console.log(saveData)
             this._modelStore.namespace(this._namespace).set(this._id, saveData)
         } else {
             currentData = this._modelStore.get(this._id)
@@ -58,7 +59,7 @@ class Model {
         }
 
         this._struct.forEach((item: string) => {
-            Object.defineProperty(this, item, { get: () => cleanInputData[item] })
+            Object.defineProperty(this, item, { get: () => cleanInputData[item], set: (x) => x  })
         }, this)
 
     }

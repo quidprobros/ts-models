@@ -11,10 +11,28 @@
         $bundles
 
         <script type="text/javascript">
-         const dude = new User(77)
+         function print_r(o) {
+             return JSON.stringify(o,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
+         }
+
+         const dude = new User(27)
          dude.save({
-             username: "guyguy77"
+             username: "guyguy77",
          })
+
+         document.write(print_r(dude.dump()))
+
+         /* dude.save({
+          *     age: 37
+          * });
+
+          * dude.save({
+          *     age: 100
+          * });
+
+          */
+
+       //  dude.erase()
         </script>
 
     </body>
