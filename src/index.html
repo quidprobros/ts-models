@@ -4,35 +4,63 @@
         <meta charset="UTF-8"/>
         <title>Document</title>
         $css
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
     </head>
     <body id="body">
+        <form name="new-user-form">
+            <h1>Create new user</h1>
+            <input placeholder='firstname' name="firstname"/>
+            <input placeholder='lastname' name="lastname"/>
+            <input placeholder='age' name="age" type="text" value=""/>
+            <button>submit</button>
+        </form>
+
+        <div id="output"></div>
+
+        <form name="load-user-form">
+            <h1>Load user</h1>
+            <input type='number' name='user-id'>
+            <button name='fetch'>fetch</button>
+            <button>update</button>
+        </form>
+
+        <div id="output2"></div>
+
 
 
         $bundles
 
-        <script type="text/javascript">
+        <script>
          function print_r(o) {
              return JSON.stringify(o,null,'\t').replace(/\n/g,'<br>').replace(/\t/g,'&nbsp;&nbsp;&nbsp;'); 
          }
 
-         const dude = new User(27)
-         dude.save({
-             username: "guyguy77",
+         let dude
+         $("[name='new-user-form']").on("submit", function(e) {
+             e.preventDefault();
+             dude = new User()
+             const data = {};
+             $(this).serializeArray().forEach(function(element) {
+                 if (element.value) {
+                     data[element.name] = element.value
+                 }
+             });
+
+             dude.save(data);
+             $("#output").html(print_r(dude.dump()))
          })
 
-         document.write(print_r(dude.dump()))
+         $("[name='load-user-form']").on("mousedown touchstart", "[name='fetch']", function(e) {
+             const formData = new FormData(e.delegateTarget)
+             const id = formData.get("user-id")
+             const dude = new User(id)
+             $("#output2").html(print_r(dude.dump()))
+         });
 
-         /* dude.save({
-          *     age: 37
-          * });
+         $("[name='load-user-form']").on("submit", function(e) {
+             e.preventDefault();
+         });
 
-          * dude.save({
-          *     age: 100
-          * });
-
-          */
-
-       //  dude.erase()
         </script>
 
     </body>

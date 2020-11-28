@@ -1,22 +1,16 @@
 // could use store.transact to enforce types?
 
-import $ from "jquery"
-
 import dlv from "@paxperscientiam/dlv.ts"
 
-import store, { set } from "store2"
+import store from "store2"
 
-import {objFilter} from "./util"
-
-const x = document.getElementById("body");
-
-x!.style.backgroundColor = "yellow"
-
-//store.clearAll()
+import {objFilter, registry} from "./util"
 
 interface IStruct {
     [prop:string]: string
 }
+
+
 
 class Model {
     protected _id!: number
@@ -24,9 +18,20 @@ class Model {
     private _struct!: string[]
     private _namespace!: string
 
-    constructor(namespace: string, struct: string[]) {
+    constructor(namespace: string, struct: string[], id?: number) {
         this._namespace = namespace
         this._struct = struct
+
+        if (null == id) {
+            this._id = registry.getUniq(this._namespace)
+            this.updateRegistry()
+        } else {
+            this._id = id
+        }
+    }
+
+    private updateRegistry() {
+        registry.push(this._id, this._namespace)
     }
 
     save(data: IStruct, overwrite: boolean = false) {
@@ -43,7 +48,6 @@ class Model {
             } else {
                 saveData = cleanInputData
             }
-            console.log(saveData)
             this._modelStore.namespace(this._namespace).set(this._id, saveData)
         } else {
             currentData = this._modelStore.get(this._id)
@@ -59,7 +63,7 @@ class Model {
         }
 
         this._struct.forEach((item: string) => {
-            Object.defineProperty(this, item, { get: () => cleanInputData[item], configurable: true })
+            Object.defineProperty(this, item, { get: () => cleanInputData[item], configurable: true})
         }, this)
 
     }
@@ -77,7 +81,10 @@ class Model {
     }
 
     dump() {
-        return this._modelStore.namespace(this._namespace).get(this._id)
+        return {
+            id: this._id, 
+            ...this._modelStore.namespace(this._namespace).get(this._id)
+        }
     }
 }
 
@@ -90,17 +97,17 @@ class User extends Model {
         super(
             "User",
             [
-                "name",
+                "firstname",
+                "lastname",
                 "username",
                 "age",
-            ]
+            ],
+            id
         )
+    }
 
-        if (null == id) {
-            throw 'id required!';
-        } else {
-            this._id = id
-        }
+    get fullname() {
+        return `${this.firstname} ${this.lastname}`
     }
 }
 
