@@ -9,14 +9,22 @@ export const registry = {
     getUniq(namespace: string) {
         let registry = store.namespace(namespace).get("registry")
         if (false === Array.isArray(registry)) {
-            registry = [registry]
+            if (Number.isInteger(registry * 1)) {
+                registry = [registry]
+            } else {
+                registry = []
+            }
         }
         return Math.max(...registry) + 1
     },
     push(input: any, namespace: string) {
         let registry = store.namespace(namespace).get("registry")
         if (false === Array.isArray(registry)) {
-            registry = [registry]
+            if (Number.isInteger(registry * 1)) {
+                registry = [registry]
+            } else {
+                registry = []
+            }
         }
         registry.push(input)
         store.namespace(namespace).set("registry", registry)
