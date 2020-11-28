@@ -24,7 +24,6 @@
     "fuse-box": "^4.0.0-next.446",
     "jquery": "^3.5.1",
     "node-localstorage": "^2.1.5",
-    "object-path": "^0.11.5",
     "store2": "^2.12.0"
   },
   "devDependencies": {

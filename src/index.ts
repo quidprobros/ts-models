@@ -90,8 +90,6 @@ class Model {
 
 
 class User extends Model {
-//    private userStore!: store.StoreAPI
-    private originalData!: {}
 
     constructor(id?: number) {
         super(
