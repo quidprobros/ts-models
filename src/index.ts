@@ -3,14 +3,12 @@
 import dlv from "@paxperscientiam/dlv.ts"
 
 import store from "store2"
-
+ 
 import {objFilter, registry} from "./util"
 
 interface IStruct {
     [prop:string]: string
 }
-
-
 
 export class Model {
     protected _id!: number
@@ -111,44 +109,3 @@ export class Collection {
     }
 }
 
-class User extends Model {
-
-    constructor(id?: number) {
-        super(
-            "User",
-            [
-                "firstname",
-                "lastname",
-                "username",
-                "age",
-            ],
-            id
-        )
-    }
-
-    get fullname() {
-        return `${this.firstname} ${this.lastname}`
-    }
-}
-
-class UserCollection extends Collection {
-    constructor() {
-        super("User")
-    }
-}
-
-// class User_collection extends Collection {
-//     constructor() {
-//         super()
-//     }
-
-// }
-
-
-
-globalThis.Model = Model
-globalThis.store = store
-
-
-globalThis.User = User
-globalThis.UserCollection = UserCollection

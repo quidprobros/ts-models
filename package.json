@@ -1,27 +1,32 @@
 {
-  "name": "@paxperscientiam/ts-models",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
-  "scripts": {
-    "start": "ts-node fusebox.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paxperscientiam/ts-models.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/paxperscientiam/ts-models/issues"
-  },
-  "homepage": "https://github.com/paxperscientiam/ts-models#readme",
-  "dependencies": {
-    "@paxperscientiam/dlv.ts": "^1.2.5",
-    "store2": "^2.12.0"
-  },
-  "devDependencies": {
-    "fuse-box": "^4.0.0-next.446",
-    "ts-node": "^9.0.0"
-  }
+    "name": "@paxperscientiam/ts-models",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.ts",
+    "scripts": {
+        "start": "ts-node fusebox.ts",
+        "build": "ts-node fusebox.ts build",
+        "build:check": "tsc --noEmit -p tsconfig.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/paxperscientiam/ts-models.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/paxperscientiam/ts-models/issues"
+    },
+    "homepage": "https://github.com/paxperscientiam/ts-models#readme",
+    "dependencies": {
+        "@paxperscientiam/dlv.ts": "^1.2.5",
+        "store2": "^2.12.0"
+    },
+    "devDependencies": {
+        "fuse-box": "^4.0.0-next.446",
+        "ts-node": "^9.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

@@ -63,7 +63,6 @@
 
          $("[name='load-user-form']").on("submit", function(e) {
              e.preventDefault();
-//             dude = new User()
              const data = {};
              $(this).serializeArray().forEach(function(element) {
                  if (element.value) {
@@ -71,7 +70,7 @@
                  }
              });
              const dude = new User(data['user-id'])
-
+             dude.save(data)
              $("[name='fetch']", this).trigger("mousedown")
          });
 
