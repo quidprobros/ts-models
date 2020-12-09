@@ -15,7 +15,7 @@ export class Model {
     private _modelStore: store.StoreAPI = store
     private _struct!: string[]
     private _namespace!: string
-    
+
     constructor(namespace: string, struct: string[], id?: number) {
         this._namespace = namespace
         this._struct = struct
@@ -30,7 +30,6 @@ export class Model {
 
     private updateRegistry() {
         if (Number.isInteger(this._id * 1)) {
-            console.log(this._id)
             registry.push(this._id, this._namespace + "_registry")
         }
     }
@@ -98,14 +97,17 @@ export class Collection {
         this._namespace = namespace
     }
 
-    total() {
+    total(): number {
         const registry: any[] = this._modelStore.namespace(this._namespace + "_registry").get("registry")
-        return (registry.filter((item) => {
+        if (null == registry) {
+            return 0
+        }
+        return ((registry.filter((item) => {
             if (Number.isFinite(item) && item !== 0) {
                 return true
             } 
             return false
-        }) as any[]).length;
+        }) as any[]).length)
     }
 }
 

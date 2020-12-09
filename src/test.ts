@@ -1,4 +1,5 @@
 import {Collection, Model} from "./index"
+import store from "store2"
 
 class User extends Model {
 
@@ -28,3 +29,4 @@ class UserCollection extends Collection {
 
 globalThis.User = User
 globalThis.UserCollection = UserCollection
+globalThis.store = store
