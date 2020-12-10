@@ -1,8 +1,24 @@
 import { fusebox, sparky } from 'fuse-box';
+import {pluginTypeChecker} from 'fuse-box-typechecker';
+
+import * as ts from "typescript";
+
+const typeChecker = require('fuse-box-typechecker').TypeChecker({
+    tsConfig: './tsconfig.json',
+    basePath: './',
+    name: 'checkerSync'
+});
 
 class Context {
     public getConfig(isProduction = false) {
-        console.log(isProduction)
+        const plugins = []
+        if(!isProduction) {
+            plugins.push(pluginTypeChecker({
+                name: 'Superman',
+                tsConfig: './tsconfig.json'
+            }))
+        }
+
         return fusebox({
             logging: {
                 level: 'verbose',
@@ -18,15 +34,17 @@ class Context {
                 },
             },
             cache: false,
-            "hmr": !isProduction
+            "hmr": !isProduction,
+            plugins
         })
     }
 }
 
+
 const {
     rm,
     task,
-    src,
+    
 } = sparky<Context>(Context)
 
 task("default", async (ctx: Context) => {
@@ -34,8 +52,24 @@ task("default", async (ctx: Context) => {
     await fuse.runDev()
 })
 
+task('typecheck', () => {
+    typeChecker.printSettings();
+    typeChecker.inspectAndPrint();
+    typeChecker.worker_watch('./src');
+});
+
 task("build", async (ctx: Context) => {
+    console.log('prod')
     const fuse = ctx.getConfig(true)
-    await fuse.runProd()
+    rm('./dist');
+    await fuse.runProd({
+        manifest: false,
+        bundles: {
+            app: 'index.js',
+        },
+    })
+        .then(function() {
+        // 
+    })
 })
 

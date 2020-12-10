@@ -1,7 +1,7 @@
 import store from "store2"
 
 // https://stackoverflow.com/a/58042070
-export function objFilter(arrFilter: any[], data) {
+export function objFilter(arrFilter: any[], data: {}) {
     return Object.fromEntries(Object.entries(data).filter(([key, value])=> arrFilter.includes(key)))
 }
 

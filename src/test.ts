@@ -1,7 +1,10 @@
 import {Collection, Model} from "./index"
 import store from "store2"
 
+
 class User extends Model {
+    firstname!: string
+    lastname!: string
 
     constructor(id?: number) {
         super(
@@ -16,7 +19,7 @@ class User extends Model {
         )
     }
 
-    get fullname() {
+    get fullname(): string {
         return `${this.firstname} ${this.lastname}`
     }
 }
@@ -27,6 +30,14 @@ class UserCollection extends Collection {
     }
 }
 
-globalThis.User = User
-globalThis.UserCollection = UserCollection
-globalThis.store = store
+declare global {
+    interface Window {
+        User: new () => User
+        UserCollection: new () => UserCollection
+        store: store.StoreAPI
+    }
+}
+
+window.User = User
+window.UserCollection = UserCollection
+window.store = store
