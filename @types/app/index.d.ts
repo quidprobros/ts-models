@@ -1,16 +1,23 @@
-declare class Model {
-    constructor(namespace: string, struct: string[], id?: number)
-    protected _id: number
-    private _modelStore: any
-    private _struct: string[]
-    private _namespace: string
-    
-    private updateRegistry(): void
-
-    id: number // getter
-
-    save(a: any, overwrite: boolean): void
-
-    erase(): void
-    dump(): any
+interface IStruct {
+    [prop: string]: string;
 }
+export declare class Model {
+    protected _id: number;
+    private _modelStore;
+    private _struct;
+    private _namespace;
+    constructor(namespace: string, struct: string[], id?: number);
+    private updateRegistry;
+    save(data: IStruct, overwrite?: boolean): void;
+    getItem(key: string): any;
+    get id(): number;
+    erase(): void;
+    dump(): any;
+}
+export declare class Collection {
+    private _modelStore;
+    private _namespace;
+    constructor(namespace: string);
+    total(): number;
+}
+export {};

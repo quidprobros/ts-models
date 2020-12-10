@@ -10,7 +10,7 @@ interface IStruct {
     [prop:string]: string
 }
 
-export class Model<Model> {
+export class Model {
     protected _id!: number
     private _modelStore: store.StoreAPI = store
     private _struct!: string[]

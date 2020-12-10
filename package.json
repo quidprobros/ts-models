@@ -1,15 +1,16 @@
 {
     "name": "@paxperscientiam/ts-models",
-    "version": "0.0.0-beta",
+    "version": "0.0.8-beta",
     "description": "Base classes for model classes that store data in browser's localstorage.",
-    "main": "dist/tsModels.js",
-    "types": "index.d.ts",
+    "main": "dist/index.js",
+    "types": "@types/app/index.d.ts",
     "source": "src/index.ts",
     "scripts": {
         "start": "ts-node fusebox.ts",
         "build": "ts-node fusebox.ts build",
         "typecheck": "ts-node fusebox.ts typecheck",
-        "build:check": "tsc --noEmit -p tsconfig.json"
+        "build:check": "tsc --noEmit -p tsconfig.json",
+        "prepublishOnly": "npm run build"
     },
     "repository": {
         "type": "git",
@@ -40,6 +41,7 @@
     },
     "files": [
         "dist/index.js",
-        "dist/index.js.map"
+        "dist/index.js.map",
+        "@types"
     ]
 }

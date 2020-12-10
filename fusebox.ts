@@ -1,6 +1,8 @@
 import { fusebox, sparky } from 'fuse-box';
 import {pluginTypeChecker} from 'fuse-box-typechecker';
 
+const { spawn } = require('child_process')
+
 import * as ts from "typescript";
 
 const typeChecker = require('fuse-box-typechecker').TypeChecker({
@@ -44,8 +46,12 @@ class Context {
 const {
     rm,
     task,
-    
+    exec
 } = sparky<Context>(Context)
+
+task("generate-definition", async () => {
+    const tsc = spawn('tsc', ['--emitDeclarationOnly', '--outDir', './@types/app']);
+})
 
 task("default", async (ctx: Context) => {
     const fuse = ctx.getConfig(false)
@@ -59,9 +65,10 @@ task('typecheck', () => {
 });
 
 task("build", async (ctx: Context) => {
-    console.log('prod')
     const fuse = ctx.getConfig(true)
-    rm('./dist');
+    rm('./dist/*')
+    rm('./@types/app/*')
+    await exec("generate-definition")
     await fuse.runProd({
         manifest: false,
         bundles: {
@@ -69,7 +76,7 @@ task("build", async (ctx: Context) => {
         },
     })
         .then(function() {
-        // 
+            console.log("Done building")
     })
 })
 
