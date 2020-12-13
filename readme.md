@@ -43,7 +43,8 @@ export declare class Collection {
 npm install
 
 # build project and load test server
-npm start
+# This should open localhost:4444 in your browser
+npm run example
 ```
 
 # Basic example
