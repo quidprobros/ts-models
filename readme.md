@@ -1,4 +1,3 @@
-![npm (scoped)](https://img.shields.io/npm/v/@paxperscientiam/ts-models?style=for-the-badge)
 ![Travis (.org)](https://img.shields.io/travis/paxperscientiam/ts-models?style=for-the-badge)
 
 # What is?
