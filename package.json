@@ -1,16 +1,15 @@
 {
     "name": "@paxperscientiam/ts-models",
-    "version": "0.0.8-beta",
+    "version": "0.0.12-beta",
     "description": "Base classes for model classes that store data in browser's localstorage.",
-    "main": "dist/index.js",
-    "types": "@types/app/index.d.ts",
+    "main": "./lib/cjs/index.js",
+    "module": "./lib/esm/index.js",
     "source": "src/index.ts",
     "scripts": {
-        "start": "ts-node fusebox.ts",
-        "build": "ts-node fusebox.ts build",
-        "typecheck": "ts-node fusebox.ts typecheck",
-        "build:check": "tsc --noEmit -p tsconfig.json",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run start",
+        "clean": "command rm -rf ./lib/*",
+        "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+        "start": "npm run clean && npm run tsc"
     },
     "repository": {
         "type": "git",
@@ -24,24 +23,16 @@
     "homepage": "https://github.com/paxperscientiam/ts-models#readme",
     "dependencies": {
         "@paxperscientiam/dlv.ts": "^1.2.5",
-        "inputmask": "^5.0.5",
         "store2": "^2.12.0"
     },
     "devDependencies": {
         "@types/node": "^14.14.11",
-        "dts-gen": "^0.6.0",
-        "dts-generator": "^3.0.0",
-        "fuse-box": "^4.0.0-next.446",
-        "fuse-box-typechecker": "^3.0.1",
-        "microbundle": "^0.12.4",
         "ts-node": "^9.0.0"
     },
     "publishConfig": {
         "access": "public"
     },
     "files": [
-        "dist/index.js",
-        "dist/index.js.map",
-        "@types"
+        "lib"
     ]
 }
