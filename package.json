@@ -1,6 +1,6 @@
 {
     "name": "@paxperscientiam/ts-models",
-    "version": "0.0.12-beta",
+    "version": "0.0.1",
     "description": "Base classes for model classes that store data in browser's localstorage.",
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
@@ -34,5 +34,10 @@
     },
     "files": [
         "lib"
+    ],
+    "keywords": [
+        "ORM",
+        "model",
+        "localstorage"
     ]
 }
