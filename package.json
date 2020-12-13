@@ -9,7 +9,9 @@
         "prepublishOnly": "npm run start",
         "clean": "command rm -rf ./lib/*",
         "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-        "start": "npm run clean && npm run tsc"
+        "start": "npm run clean && npm run tsc",
+        "example": "ts-node --skip-project fusebox.ts",
+        "test": "ts-node --skip-project fusebox.ts build"
     },
     "repository": {
         "type": "git",
@@ -28,7 +30,9 @@
     },
     "devDependencies": {
         "@types/node": "^14.14.11",
-        "ts-node": "^9.0.0"
+        "fuse-box": "^4.0.0-next.447",
+        "fuse-box-typechecker": "^3.0.1",
+        "ts-node": "^9.1.1"
     },
     "publishConfig": {
         "access": "public"
