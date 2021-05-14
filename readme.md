@@ -4,7 +4,7 @@
 
 This project provides two classes for building models with data stored in localstorage.
 
-[Demo](docs/demo1.gif)
+![Demo](docs/demo1.gif)
 
 Definitions:
 ```ts
