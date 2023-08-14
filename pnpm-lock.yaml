@@ -548,7 +548,7 @@ packages:
   /fuse-box-typechecker@3.1.1:
     resolution: {integrity: sha512-5yDQP15I2nZ/LZrFwoBpAn2iq64F/OpQ9jt/maVqoDGtU+WPtP4rHC9j8DeRc005mqCTcb/PZkHzkFYwnPYJYQ==}
     dependencies:
-      json5: 2.2.0
+      json5: 2.2.3
       object.entries: 1.1.3
       tslib: 2.2.0
       watch: 1.0.2
@@ -849,12 +849,10 @@ packages:
       is-docker: 2.2.1
     dev: true
 
-  /json5@2.2.0:
-    resolution: {integrity: sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==}
+  /json5@2.2.3:
+    resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
-    dependencies:
-      minimist: 1.2.5
     dev: true
 
   /jsonfile@6.1.0:
